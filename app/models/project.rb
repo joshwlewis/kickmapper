@@ -1,8 +1,6 @@
 # Thanks to @redronin for initial kickstarter scraping work github.com/redronin/kickstarter
 
-class Project
-  BASE_URL = "http://kickstarter.com"  
-  attr_reader :node
+class Project < Kickstarter
 
   Categories = {
     :art         => "art",
@@ -56,6 +54,11 @@ class Project
   def self.by_list(list, options = {})
     path = File.join(BASE_URL, 'discover', Lists[list.to_sym])
     list(path, options)
+  end
+
+  def self.list(path, options={})
+    options[:css_selector] = '.project'
+    super(path, options)
   end
     
   def initialize(node)
@@ -113,7 +116,10 @@ class Project
       end
     end
   end
-  
+
+  def backers
+    Backer.by_project_url(url)
+  end
 
   def to_hash
     {
@@ -131,38 +137,6 @@ class Project
 
   def inspect
     to_hash.inspect
-  end
-  
-  private
-  
-  def self.list(url, options = {})
-    pages = options.fetch(:pages, 0)
-    pages -= 1 unless pages == 0 || pages == :all
-
-    start_page = options.fetch(:page, 1)
-    end_page   = pages == :all ? 10000 : start_page + pages
-
-    results = []
-
-    params = options[:params]
-    (start_page..end_page).each do |page|
-      retries = 0
-      params[:page]=page
-      url_with_params = url + "?" + params.map{|k,v| "#{k}=#{v}"}.join('&')
-      begin
-        doc = Nokogiri::HTML(open url_with_params)
-        nodes = doc.css('.project')
-        break if nodes.empty?
-
-        nodes.each do |node|
-          results << Project.new(node)
-        end
-      rescue Timeout::Error
-        retries += 1
-        retry if retries < 3
-      end
-    end
-    results
   end
 
   def link
