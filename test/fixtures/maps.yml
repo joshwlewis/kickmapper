@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  project_url: MyString
+  location_data: MyText
+
+two:
+  project_url: MyString
+  location_data: MyText
