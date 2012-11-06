@@ -12,8 +12,6 @@ class Kickstarter
 
     results = []
 
-    puts "start: #{start_page}"
-    puts "end: #{end_page}"
     params = options[:params] || {}
     (start_page..end_page).each do |page|
       retries = 0
