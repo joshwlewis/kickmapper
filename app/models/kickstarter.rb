@@ -1,6 +1,7 @@
 class Kickstarter
   BASE_URL = "http://kickstarter.com"
   attr_reader :node
+  attr_accessor :document
   
   def self.list(url, options = {} )
     pages = options.fetch(:pages, 0)
@@ -24,7 +25,7 @@ class Kickstarter
         break if nodes.empty?
 
         nodes.each do |node|
-          results << self.new(node)
+          results << self.new(node: node)
         end
       rescue Timeout::Error
         retries += 1
@@ -34,7 +35,13 @@ class Kickstarter
     results
   end
 
-  def initialize(node)
-    @node = node
+  def initialize(options)
+    @node = options[:node]
+    @url = options[:url]
+    load_document if node.blank?
+  end
+
+  def load_document
+    @document = Nokogiri::HTML(open url)
   end
 end
