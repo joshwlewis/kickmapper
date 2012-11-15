@@ -1,9 +1,17 @@
 class Map < ActiveRecord::Base
-  serialize :location_data
-  attr_accessible :location_data, :project_url
+  serialize :locations_cache
+  attr_accessible :locations_cache, :project_url
 
   def retrieve_location_data
-    locations = Backer.by_project_url(project_url).map(&:location).select(&:present?)
-    location_data = locations.each_with_object(Hash.new(0)) { |o, h| h[o] += 1 }
+    self.location_data = locations_with_count
   end
+
+  def backers
+    Backer.by_project_url(project_url)
+  end
+
+  def locations
+    self.locations_cache ||= backers.map(&:location).select(&:present?) 
+  end
+
 end

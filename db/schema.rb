@@ -23,15 +23,9 @@ ActiveRecord::Schema.define(:version => 20121106040449) do
 
   create_table "maps", :force => true do |t|
     t.string   "project_url"
-    t.text     "location_data"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-  end
-
-  create_table "projects", :force => true do |t|
-    t.string   "url"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.text     "locations_cache"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
 end
