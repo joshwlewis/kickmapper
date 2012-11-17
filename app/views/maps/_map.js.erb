@@ -1,0 +1,32 @@
+var heatmapData = [
+  <%= 
+    @map.locations.map do |l| 
+      "new google.maps.LatLng( #{l.latitude}, #{l.longitude})"
+    end.join(',') 
+  %>
+];
+
+var mapCenter = new google.maps.LatLng(<%= @map.center_latitude %>, <%= @map.center_longitude %>);
+
+map = new google.maps.Map(document.getElementById('map-canvas'), {
+  center: mapCenter,
+  zoom: 8,
+  mapTypeId: google.maps.MapTypeId.ROADMAP
+});
+
+var heatmap = new google.maps.visualization.HeatmapLayer({
+  data: heatmapData
+});
+
+heatmap.setMap(map);
+
+
+//  Create a new viewpoint bound
+var bounds = new google.maps.LatLngBounds ();
+//  Go through each...
+for (var i = 0, LtLgLen = heatmapData.length; i < LtLgLen; i++) {
+  //  And increase the bounds to take this point
+  bounds.extend (heatmapData[i]);
+}
+//  Fit these bounds to the map
+map.fitBounds (bounds);

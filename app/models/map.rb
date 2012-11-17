@@ -1,17 +1,36 @@
 class Map < ActiveRecord::Base
-  serialize :locations_cache
-  attr_accessible :locations_cache, :project_url
+  attr_accessible :project_url
+  
+  has_and_belongs_to_many :locations
 
-  def retrieve_location_data
-    self.location_data = locations_with_count
+  after_save :read_locations, if: :read_locations?
+
+  def latitudes
+    locations.map(&:latitude)
+  end
+
+  def longitudes
+    locations.map(&:longitude)
+  end
+
+  def center_longitude
+    longitudes.sum / longitudes.size.to_f
+  end
+
+  def center_latitude
+    latitudes.sum / latitudes.size.to_f
   end
 
   def backers
     Backer.by_project_url(project_url)
   end
 
-  def locations
-    self.locations_cache ||= backers.map(&:location).select(&:present?) 
+  def read_locations?
+    project_url_changed? || locations.blank?
+  end
+
+  def read_locations
+    self.locations = backers.map(&:location).select(&:valid?)
   end
 
 end

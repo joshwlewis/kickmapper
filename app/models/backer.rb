@@ -1,7 +1,7 @@
 class Backer < Kickstarter
 
   def self.by_project_url(url, options = {})
-    # options[:pages] = :all
+    options[:pages] = :all
     options[:css_selector] = '.NS_backers__backing_row'
     list(File.join(url, 'backers'), options)
   end

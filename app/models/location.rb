@@ -1,10 +1,15 @@
 class Location < ActiveRecord::Base
-  acts_as_gmappable process_geocoding: :geocode?, address: :address
 
-  validates :address, presence: true
+  geocoded_by :address
+
+  has_and_belongs_to_many :maps
+  
+  validates :address, presence: true, uniqueness: true
+
+  after_validation :geocode, if: :geocode?
 
   def geocode?
-    (address.present? && (latitude.blank? || longitude.blank?)) || address_changed?
+    (latitude.blank? || longitude.blank?) || address_changed?
   end
 
 end

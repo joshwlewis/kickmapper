@@ -5,8 +5,16 @@
   <%= @map.project_url %>
 </p>
 
-<%= gmaps4rails(@map.locations.to_gmaps4rails) %>
+<p>
+	<b>Location data:</b>
+	<%= @map.locations %>
+</p>
 
+<div id="map-canvas"></div>
+
+<%= javascript_tag do %>
+  <%= render partial: 'map.js.erb' %>
+<% end %>
 
 <%= link_to 'Edit', edit_map_path(@map) %> |
 <%= link_to 'Back', maps_path %>
