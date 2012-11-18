@@ -4,6 +4,11 @@ class Map < ActiveRecord::Base
   has_and_belongs_to_many :locations
 
   after_save :read_locations, if: :read_locations?
+  before_save :set_attributes
+
+  def project
+    @project ||= Project.new(url: project_url)
+  end
 
   def latitudes
     locations.map(&:latitude)
@@ -30,7 +35,15 @@ class Map < ActiveRecord::Base
   end
 
   def read_locations
-    self.locations = backers.map(&:location).select(&:valid?)
+    self.locations = backers.map(&:location).select{|l| l.latitude && l.longitude}
+  end
+
+  private
+
+  def set_attributes
+    [:name, :description, :image_url].each do |a|
+      send :"#{a}=", project.send(a)
+    end
   end
 
 end

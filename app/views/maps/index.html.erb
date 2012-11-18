@@ -2,19 +2,17 @@
 
 <table>
   <tr>
-    <th>Project url</th>
-    <th>Location data</th>
-    <th></th>
-    <th></th>
+    <th>Thumbnail</th>
+    <th>Name</th>
+    <th>Url</th>
     <th></th>
   </tr>
 
 <% @maps.each do |map| %>
   <tr>
-    <td><%= map.project_url %></td>
-    <td><%= map.locations %></td>
-    <td><%= link_to 'Show', map %></td>
-    <td><%= link_to 'Edit', edit_map_path(map) %></td>
+    <td><%= link_to image_tag(map.image_url), map_path(map) %></td>
+    <td><%= link_to map.name, map_path(map) %></td>
+    <td><%= link_to map.project_url %></td>
     <td><%= link_to 'Destroy', map, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>

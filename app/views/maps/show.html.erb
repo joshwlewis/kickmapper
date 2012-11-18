@@ -1,20 +1,22 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Project url:</b>
-  <%= @map.project_url %>
-</p>
-
-<p>
-	<b>Location data:</b>
-	<%= @map.locations %>
-</p>
-
-<div id="map-canvas"></div>
+<div class="wrapper">
+	<div class="project">
+		<div class="image">
+			<%= link_to image_tag(@map.image_url), @map.project_url %>
+		</div>
+		<div class="details">
+			<h3><%= link_to @map.name, @map.project_url %></h3>
+			<p><%= @map.description %></p>
+		</div>
+	</div>
+	<div class="map">
+    <div id="map-canvas"></div>
+  </div>
+</div>
 
 <%= javascript_tag do %>
   <%= render partial: 'map.js.erb' %>
 <% end %>
 
-<%= link_to 'Edit', edit_map_path(@map) %> |
-<%= link_to 'Back', maps_path %>
+

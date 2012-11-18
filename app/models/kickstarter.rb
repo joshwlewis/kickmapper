@@ -16,6 +16,7 @@ class Kickstarter
     (start_page..end_page).each do |page|
       retries = 0
       params[:page]=page
+      Rails.logger.info "Processing #{url} page #{page}"
       url_with_params = url + "?" + params.map{|k,v| "#{k}=#{v}"}.join('&')
       begin
         doc = Nokogiri::HTML(open url_with_params)

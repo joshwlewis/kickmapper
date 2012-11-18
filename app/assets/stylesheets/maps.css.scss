@@ -2,7 +2,43 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-#map-canvas {
-	width: 60em;
-	height: 60em;
+
+.wrapper {
+	width: 80em;
+	padding: 1em;
+	margin: auto;
+	.project {
+		.image {
+	    float: left;
+	    width: 12em;
+		  img {height:11em;width:auto;}
+	    img {height:auto;width:11em;}
+	  }
+		.details {
+		  float: left;
+		  width: 66em;
+		}
+	}
+	.map {
+	  width: 100%;
+	  height: 100%;
+    #map-canvas {
+      width: 79em;
+      height: 79em;
+    }
+	}
+}
+
+table {
+	td{
+	  padding: 1em;
+	  img {
+	    height: 100px;
+	    width: auto;
+	  }
+	  img{
+	    height: auto;
+	    width: 100px;
+	  }
+	}
 }
