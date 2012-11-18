@@ -35,7 +35,7 @@ class Map < ActiveRecord::Base
   end
 
   def read_locations
-    self.locations = backers.map(&:location).select{|l| l.latitude && l.longitude}
+    self.locations = backers.map(&:location).compact.select{|l| l.latitude && l.longitude}
   end
 
   private
