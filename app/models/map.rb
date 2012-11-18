@@ -11,11 +11,11 @@ class Map < ActiveRecord::Base
   end
 
   def latitudes
-    locations.map(&:latitude)
+    locations.map(&:latitude).compact
   end
 
   def longitudes
-    locations.map(&:longitude)
+    locations.map(&:longitude).compact
   end
 
   def center_longitude
