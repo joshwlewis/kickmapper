@@ -28,8 +28,10 @@ class Kickstarter
         end
       rescue Timeout::Error
         retries += 1
+        sleep 10
         retry if retries < 3
       end
+      sleep 0.5
     end
     results
   end
