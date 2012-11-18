@@ -28,10 +28,13 @@ class Kickstarter
         end
       rescue
         retries += 1
-        sleep 10
-        retry if retries < 3
+        sleep 5
+        if retries < 3
+          Rails.logger.warn "Retrying #{url} (#{retries})"
+          retry
+        end
       end
-      sleep 0.5
+      sleep 2
     end
     results
   end
