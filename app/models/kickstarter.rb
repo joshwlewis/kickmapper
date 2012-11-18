@@ -26,7 +26,7 @@ class Kickstarter
         nodes.each do |node|
           results << self.new(node: node)
         end
-      rescue Timeout::Error
+      rescue
         retries += 1
         sleep 10
         retry if retries < 3
