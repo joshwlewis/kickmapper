@@ -19,7 +19,7 @@ class Backer < Kickstarter
   end
 
   def location
-    @location = Location.find_or_create_by_address(location_name)
+    @location = location_name.present? ? Location.find_or_create_by_address(location_name) : nil
   end
 
 end

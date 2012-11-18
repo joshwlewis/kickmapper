@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121117200843) do
+ActiveRecord::Schema.define(:version => 20121118053036) do
 
   create_table "locations", :force => true do |t|
     t.string   "address"
@@ -20,6 +20,8 @@ ActiveRecord::Schema.define(:version => 20121117200843) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  add_index "locations", ["address"], :name => "index_locations_on_address"
 
   create_table "locations_maps", :force => true do |t|
     t.integer "map_id"
