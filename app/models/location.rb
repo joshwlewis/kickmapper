@@ -9,7 +9,7 @@ class Location < ActiveRecord::Base
   after_validation :geocode, if: :geocode?
 
   def geocode?
-    (latitude.blank? || longitude.blank?) || address_changed?
+    (latitude.blank? || longitude.blank?)
   end
 
 end
